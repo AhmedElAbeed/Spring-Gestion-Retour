@@ -1,0 +1,39 @@
+<h2>Non-Conformités</h2>
+
+<form (ngSubmit)="onSubmit()">
+  <input type="hidden" [(ngModel)]="newNonConformite.id" name="id">
+  <input type="text" [(ngModel)]="newNonConformite.description" name="description" placeholder="Description" required>
+  <input type="text" [(ngModel)]="newNonConformite.gravite" name="gravite" placeholder="Gravité" required>
+  <input type="number" [(ngModel)]="newNonConformite.produitId" name="produitId" placeholder="ID Produit" required>
+  <input type="date" [(ngModel)]="newNonConformite.date" name="date" required>
+  <button type="submit">{{ isEditing ? 'Mettre à jour' : 'Ajouter' }}</button>
+  <button type="button" (click)="resetForm()" *ngIf="isEditing">Annuler</button>
+</form>
+
+<h3>Liste des Non-Conformités</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Description</th>
+      <th>Gravité</th>
+      <th>Date</th>
+      <th>ID Produit</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let nc of nonConformites">
+      <td>{{ nc.id }}</td>
+      <td>{{ nc.description }}</td>
+      <td>{{ nc.gravite }}</td>
+      <td>{{ nc.date }}</td>
+      <td>{{ nc.produitId }}</td>
+      <td>
+        <button (click)="edit(nc)">Modifier</button>
+        <button (click)="delete(nc.id)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

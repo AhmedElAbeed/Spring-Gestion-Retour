@@ -1,0 +1,30 @@
+<h2>Historique des Retours</h2>
+<table mat-table [dataSource]="historiques" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let historique">{{ historique.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef>Action</th>
+    <td mat-cell *matCellDef="let historique">{{ historique.action }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef>Date</th>
+    <td mat-cell *matCellDef="let historique">{{ historique.date | date:'short' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="employeId">
+    <th mat-header-cell *matHeaderCellDef>Employé ID</th>
+    <td mat-cell *matCellDef="let historique">{{ historique.employeId }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="retourId">
+    <th mat-header-cell *matHeaderCellDef>Retour ID</th>
+    <td mat-cell *matCellDef="let historique">{{ historique.retourId }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

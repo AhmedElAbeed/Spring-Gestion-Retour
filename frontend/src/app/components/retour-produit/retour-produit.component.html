@@ -1,0 +1,74 @@
+<form (ngSubmit)="addRetourProduit()" #retourProduitForm="ngForm">
+  <div>
+    <label for="produitId">Produit ID</label>
+    <input type="number" [(ngModel)]="newRetourProduit.produitId" name="produitId" placeholder="Produit ID" required #produitId="ngModel">
+    <div *ngIf="produitId.invalid && produitId.touched" class="error-message">Produit ID is required.</div>
+  </div>
+
+  <div>
+    <label for="client">Client</label>
+    <input type="text" [(ngModel)]="newRetourProduit.client" name="client" placeholder="Client Name" required #client="ngModel">
+    <div *ngIf="client.invalid && client.touched" class="error-message">Client name is required.</div>
+  </div>
+
+  <div>
+    <label for="raison">Raison</label>
+    <input type="text" [(ngModel)]="newRetourProduit.raison" name="raison" placeholder="Reason" required #raison="ngModel">
+    <div *ngIf="raison.invalid && raison.touched" class="error-message">Reason is required.</div>
+  </div>
+
+  <div>
+    <label for="date">Date</label>
+    <input type="date" [(ngModel)]="newRetourProduit.date" name="date" required #date="ngModel">
+    <div *ngIf="date.invalid && date.touched" class="error-message">Date is required.</div>
+  </div>
+
+  <input type="hidden" [(ngModel)]="newRetourProduit.etatTraitement" name="etatTraitement" value="Pending">
+
+  <div *ngIf="newRetourProduit.etatTraitement === 'ACCEPTED'">
+    <label for="quantityReturned">Quantity Returned</label>
+    <input type="number" [(ngModel)]="newRetourProduit.quantityReturned" name="quantityReturned" placeholder="Quantity Returned" min="1" #quantityReturned="ngModel">
+    <div *ngIf="quantityReturned.invalid && quantityReturned.touched" class="error-message">Quantity Returned must be a positive number.</div>
+  </div>
+
+  <button type="submit" [disabled]="retourProduitForm.invalid">Ajouter Retour Produit</button>
+  <div *ngIf="formError" class="error-message">{{ formError }}</div>
+</form>
+
+
+<h3>Liste des Retours Produits</h3>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Produit ID</th>
+      <th>Client</th>
+      <th>Raison</th>
+      <th>Etat Traitement</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let retourProduit of retourProduits">
+      <td>{{ retourProduit.id }}</td>
+      <td>{{ retourProduit.produitId }}</td>
+      <td>{{ retourProduit.client }}</td>
+      <td>{{ retourProduit.raison }}</td>
+      <td>{{ retourProduit.etatTraitement }}</td>
+      <td>{{ retourProduit.date }}</td>
+      <td>
+        <!-- Check if id is defined before calling delete or update methods -->
+        <button *ngIf="retourProduit.id !== undefined" (click)="deleteRetourProduit(retourProduit.id)">Supprimer</button>
+        <button *ngIf="retourProduit.id !== undefined && retourProduit.etatTraitement === 'Pending'" 
+                (click)="updateRetourProduit(retourProduit.id, 'ACCEPTED')">Accepter</button>
+        <input *ngIf="retourProduit.id !== undefined && retourProduit.etatTraitement === 'Pending'" 
+               type="number" [(ngModel)]="retourProduit.quantityReturned" placeholder="Quantity Returned" min="1" (ngModelChange)="validateQuantity(retourProduit)">
+        <button *ngIf="retourProduit.id !== undefined && retourProduit.etatTraitement === 'Pending'" 
+                (click)="updateRetourProduit(retourProduit.id, 'REFUSED')">
+          Refuser
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>  

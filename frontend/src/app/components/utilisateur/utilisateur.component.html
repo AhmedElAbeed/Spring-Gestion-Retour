@@ -1,0 +1,35 @@
+<h2>Utilisateurs</h2>
+
+<!-- Add Utilisateur Form -->
+<form (ngSubmit)="addUtilisateur()">
+  <input type="email" [(ngModel)]="newUtilisateur.email" name="email" placeholder="Email" required>
+  <input type="text" [(ngModel)]="newUtilisateur.nom" name="nom" placeholder="Nom" required>
+  <input type="text" [(ngModel)]="newUtilisateur.role" name="role" placeholder="Role" required>
+  <button type="submit">Ajouter</button>
+</form>
+
+<h3>Liste des Utilisateurs</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Nom</th>
+      <th>Role</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let utilisateur of utilisateurs">
+      <td>{{ utilisateur.email }}</td>
+      <td>{{ utilisateur.nom }}</td>
+      <td>{{ utilisateur.role }}</td>
+      <td>
+        <!-- Edit Button -->
+        <button (click)="editUtilisateur(utilisateur)">Modifier</button>
+
+        <!-- Delete Button -->
+        <button (click)="deleteUtilisateur(utilisateur.id)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
